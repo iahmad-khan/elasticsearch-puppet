@@ -37,11 +37,11 @@ class { '::elasticsearch':
     'index.routing.allocation.disable_allocation' => 'false',
     'discovery.zen.ping.multicast.enabled' => 'false',
     'discovery.zen.ping.timeout' => '10s',
-    'discovery.zen.ping.unicast.hosts' => ['es-test-master01.cern.ch'],  # here put the hostname of your master node
+    'discovery.zen.ping.unicast.hosts' => ['your-master01.cern.ch'],  # here put the hostname of your master node
     'indices.memory.index_buffer_size' => '40%',
   },
   init_defaults => {
-    'ES_HEAP_SIZE' => '2g',  # !! must be exactly equal to 50% of the RAM !!
+    'ES_HEAP_SIZE' => '8g',  # !! must be exactly equal to 50% of the RAM !!
     'ES_GROUP' => $es_user,
     'ES_USER' => $es_user,
     'CONF_DIR' => '/etc/elasticsearch',
