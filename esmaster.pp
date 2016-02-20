@@ -9,11 +9,6 @@ firewall {'9200 es':
      dport  => '9200',
      action => 'accept',
  }
-firewall {'5601 kibana':
-     proto  => 'tcp',
-     dport  => '5601',
-     action => 'accept',
- }
 osrepos::ai121yumrepo { 'elasticsearch-1.4':
    descr    => 'Elasticsearch repository for 1.4.x packages',
    baseurl  => 'http://linuxsoft.cern.ch/elasticsearch/elasticsearch-x86_64/RPMS.es-14-el6/',
@@ -23,6 +18,7 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
    priority => 99,
  }
  $es_user = 'elasticsearch'
+ $password = 'takeitfromtigibagonruntime'
  $es_pkg_name = 'elasticsearch'
  class { '::elasticsearch':
    package_name => $es_pkg_name,
@@ -47,9 +43,12 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
      'index.routing.allocation.disable_allocation' => 'false',
      'discovery.zen.ping.multicast.enabled' => 'false',
      'discovery.zen.ping.timeout' => '10s',
+     'http.basic.enabled' => 'true',
+     'http.basic.user' => $es_user,
+     'http.basic.password' => $password,
    },
    init_defaults => {
-     'ES_HEAP_SIZE' => '2g',  # !! must be exactly equal to 50% of the RAM !!
+     'ES_HEAP_SIZE' => '4g',  # !! must be exactly equal to 50% of the RAM !!
      'ES_GROUP' => $es_user,
      'ES_USER' => $es_user,
      'CONF_DIR' => '/etc/elasticsearch',
@@ -62,6 +61,10 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
    command => '/usr/share/elasticsearch/bin/plugin -i royrusso/elasticsearch-HQ',
    unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/HQ',
  } ->
+ exec { 'install_elasticsearch_auth':
+   command => '/usr/share/elasticsearch/bin/plugin -url https://github.com/Asquera/elasticsearch-http-basic/releases/download/v1.5.1/elasticse$
+   unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/http-basic',
+ }->
  exec { 'install_elasticsearch_kibana':
    command => '/usr/share/elasticsearch/bin/plugin -url http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip -i kibana',
    unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/kibana',
