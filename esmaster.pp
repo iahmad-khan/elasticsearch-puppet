@@ -46,6 +46,7 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
      'http.basic.enabled' => 'true',
      'http.basic.user' => $es_user,
      'http.basic.password' => $password,
+     'http.basic.ipwhitelist' => ["localhost", "127.0.0.1"],
    },
    init_defaults => {
      'ES_HEAP_SIZE' => '4g',  # !! must be exactly equal to 50% of the RAM !!
