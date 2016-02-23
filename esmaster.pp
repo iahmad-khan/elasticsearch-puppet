@@ -43,10 +43,10 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
      'index.routing.allocation.disable_allocation' => 'false',
      'discovery.zen.ping.multicast.enabled' => 'false',
      'discovery.zen.ping.timeout' => '10s',
-     'http.basic.enabled' => 'true',
-     'http.basic.user' => $es_user,
-     'http.basic.password' => $password,
-     'http.basic.ipwhitelist' => ["localhost", "127.0.0.1"],
+     #'http.basic.enabled' => 'true',
+     #'http.basic.user' => $es_user,
+     #'http.basic.password' => $password,
+     #'http.basic.ipwhitelist' => ["localhost", "127.0.0.1"],
    },
    init_defaults => {
      'ES_HEAP_SIZE' => '4g',  # !! must be exactly equal to 50% of the RAM !!
@@ -62,10 +62,10 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
    command => '/usr/share/elasticsearch/bin/plugin -i royrusso/elasticsearch-HQ',
    unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/HQ',
  } ->
- exec { 'install_elasticsearch_auth':
-   command => '/usr/share/elasticsearch/bin/plugin -url https://github.com/Asquera/elasticsearch-http-basic/releases/download/v1.5.1/elasticse$
-   unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/http-basic',
- }->
+ #exec { 'install_elasticsearch_auth':
+ #  command => '/usr/share/elasticsearch/bin/plugin -url https://github.com/Asquera/elasticsearch-http-basic/releases/download/v1.5.1/elasticse$
+ #  unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/http-basic',
+ #}->
  exec { 'install_elasticsearch_kibana':
    command => '/usr/share/elasticsearch/bin/plugin -url http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip -i kibana',
    unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/kibana',
