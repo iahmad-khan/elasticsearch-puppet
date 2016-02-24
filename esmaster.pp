@@ -10,7 +10,7 @@ firewall {'9200 es':
      action => 'accept',
  }
 osrepos::ai121yumrepo { 'elasticsearch-1.5':
-   descr    => 'Elasticsearch repository for 1.4.x packages',
+   descr    => 'Elasticsearch repository for 1.5.x packages',
    baseurl  => 'http://linuxsoft.cern.ch/elasticsearch/elasticsearch-x86_64/RPMS.es-15-el6/',
    gpgcheck => 1,
    gpgkey   => 'http://linuxsoft.cern.ch/elasticsearch/GPG-KEY-elasticsearch',
