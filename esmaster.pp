@@ -71,7 +71,11 @@ osrepos::ai121yumrepo { 'elasticsearch-1.4':
  exec { 'install_elasticsearch_hq':
    command => '/usr/share/elasticsearch/bin/plugin -i royrusso/elasticsearch-HQ',
    unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/HQ',
- } ->
+ }->
+ exec { 'install_elasticsearch_searchguard':
+   command => '/usr/share/elasticsearch/bin/plugin -i com.floragunn/search-guard/0.5',
+   unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/search-guard',
+ }->
  #exec { 'install_elasticsearch_auth':
  #  command => '/usr/share/elasticsearch/bin/plugin -url https://github.com/Asquera/elasticsearch-http-basic/releases/download/v1.5.1/elasticse$
  #  unless  => '/usr/bin/test -d /usr/share/elasticsearch/plugins/http-basic',
